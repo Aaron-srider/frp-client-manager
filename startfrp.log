@@ -1,0 +1,21 @@
+2023/08/26 20:12:20 [1;34m[I] [service.go:234] login to server success, get run id [61c98e7c42ac7b77], server udp port [0][0m
+2023/08/26 20:12:20 [1;34m[I] [proxy_manager.go:144] [61c98e7c42ac7b77] proxy added: [ssh string lkasj][0m
+2023/08/26 20:12:21 [1;34m[I] [control.go:153] [ssh] start proxy success[0m
+2023/08/26 20:12:21 [1;34m[I] [control.go:153] [string] start proxy success[0m
+2023/08/26 20:12:21 [1;34m[I] [control.go:153] [lkasj] start proxy success[0m
+2023/08/26 20:28:32 [1;31m[E] [control.go:136] work connection closed, EOF[0m
+2023/08/26 20:28:32 [1;34m[I] [control.go:237] control writer is closing[0m
+2023/08/26 20:28:32 [1;34m[I] [service.go:137] try to reconnect to server...[0m
+2023/08/26 20:28:32 [1;33m[W] [service.go:140] reconnect to server error: EOF[0m
+2023/08/26 20:28:33 [1;34m[I] [service.go:137] try to reconnect to server...[0m
+2023/08/26 20:28:34 [1;33m[W] [service.go:140] reconnect to server error: EOF[0m
+2023/08/26 20:28:36 [1;34m[I] [service.go:137] try to reconnect to server...[0m
+2023/08/26 20:28:36 [1;33m[W] [service.go:140] reconnect to server error: EOF[0m
+2023/08/26 20:28:40 [1;34m[I] [service.go:137] try to reconnect to server...[0m
+2023/08/26 20:28:41 [1;33m[W] [service.go:140] reconnect to server error: EOF[0m
+2023/08/26 20:28:49 [1;34m[I] [service.go:137] try to reconnect to server...[0m
+2023/08/26 20:28:50 [1;34m[I] [service.go:234] login to server success, get run id [61c98e7c42ac7b77], server udp port [0][0m
+2023/08/26 20:28:50 [1;34m[I] [proxy_manager.go:144] [61c98e7c42ac7b77] proxy added: [ssh string lkasj][0m
+2023/08/26 20:28:52 [1;34m[I] [control.go:153] [lkasj] start proxy success[0m
+2023/08/26 20:28:52 [1;34m[I] [control.go:153] [ssh] start proxy success[0m
+2023/08/26 20:28:52 [1;34m[I] [control.go:153] [string] start proxy success[0m

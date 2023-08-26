@@ -1,0 +1,244 @@
+openapi: 3.0.0
+info:
+  title: Frp client config manager
+  version: 0.0.1
+servers:
+  - url: http://localhost:8097/api
+
+tags:
+  - common-config
+  - client-config
+
+paths:
+  /frpc:
+    get:
+      summary: manage frpc process
+      parameters:
+        - name: command
+          type: string
+          in: query
+          schema:
+            type: string
+            enum:
+              - start
+              - end
+              - restart
+          required: true
+      responses:
+        '200':    # status code
+          description: execute process successfully
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /common-config:
+    get:
+      tags:
+        - common-config
+      summary: Returns the common block
+      responses:
+        '200':    # status code
+          description: A JSON of common block
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/CommonBeanVO"
+        '404':    # status code
+          description: common block is not found
+          content:
+            application/json:
+              schema:
+                type: string
+    put:
+      tags:
+        - common-config
+      summary: Update the common block, if the common block does not exist, create it
+
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              "$ref": "#/components/schemas/UpdateCommonBeanDTO"
+
+      responses:
+        '200':    # status code
+          description: A JSON of common block
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/CommonBeanVO"
+
+
+  /client-configs:
+    get:
+      tags:
+        - client-config
+      summary: Returns a full list of config blocks
+      responses:
+        '200':    # status code
+          description: A JSON array of client blocks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ClientBeanVO"
+
+  /client-config:
+    post:
+      tags:
+        - client-config
+      summary: add a new client config block
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              "$ref": "#/components/schemas/CreateClientBeanDTO"
+      responses:
+        '200':    # status code
+          description: The added client block
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ClientBeanVO"
+        '409':    # status code
+          description: Client block exists
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "client block exists"
+
+    put:
+      tags:
+        - client-config
+      summary: update a client config block
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              "$ref": "#/components/schemas/UpdateClientBeanDTO"
+      responses:
+        '200':    # status code
+          description: The added client block
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ClientBeanVO"
+
+    delete:
+      tags:
+        - client-config
+      summary: delete a client config block
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: "#/components/schemas/DeleteClientBeanDTO"
+
+      responses:
+        '200':    # status code
+          description: The added client block
+          content:
+            application/json:
+              schema:
+                type: string
+
+
+components:
+  schemas:
+    CommonBeanVO:
+      type: object
+      properties:
+        server_addr:
+          type: string
+        server_port:
+          type: number
+        token:
+          type: string
+
+    UpdateCommonBeanDTO:
+      type: object
+      properties:
+        server_addr:
+          type: string
+        server_port:
+          type: number
+        token:
+          type: string
+      required:
+        - server_addr
+        - server_port
+        - token
+
+    ClientBeanVO:
+      type: object
+      properties:
+        name:
+          type: string
+        local_port:
+          type: number
+        remote_port:
+          type: number
+        local_ip:
+          type: string
+        type:
+          type: string
+          enum:
+            - udp
+            - tcp
+
+    CreateClientBeanDTO:
+      type: object
+      required:
+        - name
+        - type
+        - local_ip
+        - local_port
+        - remote_port
+      properties:
+        name:
+          type: string
+        local_port:
+          type: number
+        remote_port:
+          type: number
+        local_ip:
+          type: string
+        type:
+          type: string
+          enum:
+            - udp
+            - tcp
+
+    UpdateClientBeanDTO:
+      type: object
+      required:
+        - name
+        - type
+        - local_ip
+        - local_port
+        - remote_port
+      properties:
+        name:
+          type: string
+        local_port:
+          type: number
+        remote_port:
+          type: number
+        local_ip:
+          type: string
+        type:
+          type: string
+          enum:
+            - udp
+            - tcp
+    DeleteClientBeanDTO:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: ssh
