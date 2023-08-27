@@ -86,9 +86,6 @@
         </el-dialog>
 
 
-
-
-
         <el-dialog :visible.sync="addClientConfigDialogVisible">
             name
             <el-input v-model="addClientConfigDialogData.name"></el-input>
@@ -124,9 +121,7 @@ export default class IndexView extends Vue {
     }
 
     editClientConfigDialogVisible: boolean = false
-    editClientConfigDialogData: any = {
-
-    }
+    editClientConfigDialogData: any = {}
 
     frpcLog: string = ''
 
@@ -141,8 +136,9 @@ export default class IndexView extends Vue {
         local_port: 0,
         remote_port: 0
     }
+     profileName: string | null = null ;
 
-    openAddClientConfigDialog(row:any) {
+    openAddClientConfigDialog(row: any) {
         this.addClientConfigDialogVisible = true
         this.addClientConfigDialogData = {...row}
     }
@@ -282,10 +278,12 @@ export default class IndexView extends Vue {
     }
 
     created() {
-        Client.getCommonConfig().then(resp => {
+        this.profileName = this.$route.query.profileName as string
+        debugger
+        Client.getCommonConfig(this.profileName).then(resp => {
             this.common_config = resp.data
             this.common_config_set = true
-            return Client.getClientBlockList()
+            return Client.getClientBlockList(this.profileName!!)
         })
             .then((resp: any) => {
                 this.clientBlockList = resp.data

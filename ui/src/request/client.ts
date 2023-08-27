@@ -65,10 +65,13 @@ class Client {
     // endregion
 
 
-    static getClientBlockList(): AxiosPromise<any> {
+    static getClientBlockList(profileName: string ): AxiosPromise<any> {
         return request({
             url: `/client-configs`,
             method: 'get',
+            params : {
+                profileName
+            }
         });
     }
 
@@ -88,10 +91,14 @@ class Client {
         });
     }
 
-    static getCommonConfig() {
+    static getCommonConfig(profileName: string
+    ) {
         return request({
             url: `/common-config`,
             method: 'get',
+            params: {
+                profileName
+            }
         });
     }
 
@@ -120,6 +127,13 @@ class Client {
             url: `/client-config`,
             method: 'post',
             data: addClientConfigDialogData
+        });
+    }
+
+    static getProfileList() {
+        return request({
+            url: `/profiles`,
+            method: 'get',
         });
     }
 }

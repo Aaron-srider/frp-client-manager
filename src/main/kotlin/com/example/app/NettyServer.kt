@@ -16,7 +16,23 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler.Ser
 import io.netty.handler.logging.LoggingHandler
 import io.netty.handler.stream.ChunkedWriteHandler
 import mu.KotlinLogging
+import org.springframework.boot.CommandLineRunner
+import org.springframework.stereotype.Component
 import java.io.File
+
+@Component
+class NettyServerRunner : CommandLineRunner {
+
+    private val log = KotlinLogging.logger {}
+
+    override fun run(vararg args: String?) {
+        log.info { "write some here" }
+        Thread(Runnable {
+            NettyServer("localhost", 8101).run()
+        }).start()
+    }
+}
+
 
 /**
  * Discards any incoming data.

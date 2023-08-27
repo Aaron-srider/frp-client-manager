@@ -1,7 +1,5 @@
 package com.example.app.config
 
-import com.example.app.FrpConfigManager
-import com.example.app.FrpConfigManagerImpl
 import org.springframework.boot.web.server.ErrorPage
 import org.springframework.boot.web.server.ErrorPageRegistrar
 import org.springframework.boot.web.server.ErrorPageRegistry
@@ -15,17 +13,13 @@ import org.springframework.web.filter.CorsFilter
 import java.util.*
 
 class ApplicationConfig {
+
+
 }
 
 @Configuration
 class BeanFactory {
-    @Bean
-    fun frpConfigManager(): FrpConfigManager {
-        val property = System.getProperty("config.file")
-        property?.let {
-            return FrpConfigManagerImpl(it)
-        } ?: throw RuntimeException("config.file not set")
-    }
+
 }
 
 

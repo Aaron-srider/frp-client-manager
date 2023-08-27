@@ -3,13 +3,24 @@ info:
   title: Frp client config manager
   version: 0.0.1
 servers:
-  - url: http://localhost:8097/api
+  - url: http://localhost:8100/api
 
 tags:
   - common-config
   - client-config
 
 paths:
+  /profiles:
+    get:
+      responses:
+        '200':    # status code
+          description: execute process successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/ProfileVO"
   /frpc:
     get:
       summary: manage frpc process
@@ -37,6 +48,14 @@ paths:
       tags:
         - common-config
       summary: Returns the common block
+      parameters:
+        - name: profileName
+          type: string
+          in: query
+          schema:
+            type: string
+            example: frpc.ini
+          required: true
       responses:
         '200':    # status code
           description: A JSON of common block
@@ -75,6 +94,14 @@ paths:
       tags:
         - client-config
       summary: Returns a full list of config blocks
+      parameters:
+        - name: profileName
+          type: string
+          in: query
+          schema:
+            type: string
+            example: frpc.ini
+          required: true
       responses:
         '200':    # status code
           description: A JSON array of client blocks
@@ -242,3 +269,9 @@ components:
         name:
           type: string
           example: ssh
+    ProfileVO:
+      type: object
+      properties:
+        name:
+          type: string
+          example: frpc.ini

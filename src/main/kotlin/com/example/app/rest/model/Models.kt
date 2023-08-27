@@ -16,8 +16,19 @@ fun toIndentedString(o: Any?): String {
     return o?.toString()?.replace("\n", "\n    ") ?: "null"
 }
 
+
+data class ProfileVO(var name: String) {
+    constructor() : this("")
+}
+
+
 @Validated
 class DeleteClientBeanDTO {
+
+    @JsonProperty("profileName")
+    @NotEmpty
+    var profileName: String? = null
+
     @JsonProperty("name")
     @NotEmpty
     var name: String? = null
@@ -84,6 +95,11 @@ class CommonBeanVO {
  */
 @Validated
 class UpdateCommonBeanDTO {
+
+    @JsonProperty("profileName")
+    @NotEmpty
+    var profileName: String? = null
+
     @JsonProperty("server_addr")
     @NotEmpty
     var serverAddr: String? = null
@@ -109,6 +125,7 @@ class UpdateCommonBeanDTO {
 
 
 }
+
 /**
  * Gets or Sets type
  */
@@ -136,6 +153,11 @@ enum class TypeEnum(private val value: String) {
 
 @Validated
 class CreateClientBeanDTO {
+
+    @JsonProperty("profileName")
+    @NotEmpty
+    var profileName: String? = null
+
     @JsonProperty("name")
     @NotEmpty
     var name: String? = null
@@ -154,7 +176,6 @@ class CreateClientBeanDTO {
     @NotEmpty
     @JsonProperty("local_ip")
     var localIp: String? = null
-
 
 
     @JsonProperty("type")
@@ -178,6 +199,11 @@ class CreateClientBeanDTO {
 
 @Validated
 class UpdateClientBeanDTO {
+
+    @JsonProperty("profileName")
+    @NotEmpty
+    var profileName: String? = null
+
     @JsonProperty("name")
     @NotEmpty
     var name: String? = null

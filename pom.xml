@@ -81,6 +81,14 @@
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-test -->
+		<!-- <dependency> -->
+		<!-- 	<groupId>org.jetbrains.kotlin</groupId> -->
+		<!-- 	<artifactId>kotlin-test</artifactId> -->
+		<!-- 	<version>1.9.0</version> -->
+		<!-- </dependency> -->
+
 	</dependencies>
 
 	<build>

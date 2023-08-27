@@ -7,11 +7,17 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
     {
         path: '/',
-        redirect: '/index',
+        redirect: '/profiles',
     },
-    {
-        path: '/index',
-        component: () => import('@/views/index.vue'),
+      {
+        path: '/profiles',
+        component: () => import('@/views/profile/index.vue'),
+        children:[
+            {
+                path: '/detail',
+                component: () => import('@/views/profile/detail.vue'),
+            },
+        ]
     },
     {
         path: '/hello-world',
