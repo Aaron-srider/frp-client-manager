@@ -169,7 +169,7 @@ export default class IndexView extends Vue {
 
     startWebSocket() {
 
-        this.webSocketClient = new WebSocket('ws://192.168.31.94:8098/frpc-mananger');
+        this.webSocketClient = new WebSocket('wss://frpui.wenchao.fit/frpc-mananger');
 
         this.webSocketClient.onopen = () => {
             console.log('WebSocketClient connected');

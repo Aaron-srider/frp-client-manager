@@ -1,2 +1,26 @@
 server:
   port: 8097
+
+logging:
+  level:
+    root: debug
+    org.springframework: info
+    _org.springframework: info
+    org.hibernate: info
+    org.mybatis.spring.mapper.ClassPathMapperScanner: info
+    com.zaxxer.hikari.HikariConfig: info
+    com.zaxxer.hikari.pool.PoolBase: info
+    com.zaxxer.hikari.pool.HikariPool: info
+    sun.rmi: info
+    javax.management: info
+    org.apache.tomcat.util: info
+    org.apache.catalina: info
+    io:
+      netty:
+        buffer:
+          PooledByteBufAllocator: info
+        util:
+          NetUtil: info
+          internal:
+            PlatformDependent: info
+            PlatformDependent0: info

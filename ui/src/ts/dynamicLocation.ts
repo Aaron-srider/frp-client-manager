@@ -37,7 +37,7 @@ export class PageLocation {
     // In general, hardCode mode is used in develepment while dynamic mode is used in production.
     customBaseURL() {
         return {
-            baseURL: 'http://192.168.31.94:8097/api',
+            baseURL: 'https://frpui.wenchao.fit/api',
             hardCode: true,
         };
     }

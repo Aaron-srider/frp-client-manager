@@ -50,6 +50,7 @@ class NettyServer(private val host: String, private val port: Int) {
                     println("server started")
                 } else {
                     println("server start failed")
+                    println(it.cause())
                     workerGroup.shutdownGracefully()
                     bossGroup.shutdownGracefully()
                 }

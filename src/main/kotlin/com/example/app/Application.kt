@@ -30,7 +30,7 @@ class TestRunner: CommandLineRunner {
     override fun run(vararg args: String?) {
         log.info { "write some here" }
         Thread(Runnable {
-            NettyServer("192.168.31.94", 8098).run()
+            NettyServer("localhost", 8098).run()
         }).start()
     }
 
