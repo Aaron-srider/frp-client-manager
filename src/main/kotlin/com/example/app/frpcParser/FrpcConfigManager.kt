@@ -42,7 +42,7 @@ class FrpConfigManagerImpl(private val parser: FrpcConfigParser) : FrpConfigMana
         var profile = appProperties.configFileDir + "/" + profileName
         val config = parser.parse(File(profile))
         val updatedConfig = config.copy(common = CommonBean(newCommonBean.server_addr, newCommonBean.server_port, newCommonBean.token))
-        parser.writeToFile(updatedConfig, File(profile))
+        parser.writeToFile(profileName, updatedConfig, File(profile))
     }
 
     override fun getCommonBean(profileName: String): CommonBean {
@@ -55,14 +55,14 @@ class FrpConfigManagerImpl(private val parser: FrpcConfigParser) : FrpConfigMana
         var profile = appProperties.configFileDir + "/" + profileName
         val config = parser.parse(File(profile))
         val updatedClients = config.clients + ClientBean(clientBean.name, clientBean.type, clientBean.local_ip, clientBean.local_port, clientBean.remote_port)
-        parser.writeToFile(config.copy(clients = updatedClients), File(profile))
+        parser.writeToFile(profileName, config.copy(clients = updatedClients), File(profile))
     }
 
     override fun removeClientBean(profileName: String, clientName: String) {
         var profile = appProperties.configFileDir + "/" + profileName
         val config = parser.parse(File(profile))
         val updatedClients = config.clients.filter { it.name != clientName }
-        parser.writeToFile(config.copy(clients = updatedClients), File(profile))
+        parser.writeToFile(profileName, config.copy(clients = updatedClients), File(profile))
     }
 
     override fun updateClientBean(profileName: String, newClientBean: ClientBean) {
@@ -75,7 +75,7 @@ class FrpConfigManagerImpl(private val parser: FrpcConfigParser) : FrpConfigMana
                 it
             }
         }
-        parser.writeToFile(config.copy(clients = updatedClients), File(profile))
+        parser.writeToFile(profileName, config.copy(clients = updatedClients), File(profile))
     }
 
     override fun listClientBeans(profileName: String): List<ClientBean> {

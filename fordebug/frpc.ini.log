@@ -1,1 +1,5 @@
-2023/09/05 17:13:27 [1;34m[I] [service.go:234] login to server success, get run id [ff6754c81c92cbd0], server udp port [0][0m
+2023/09/07 11:33:10 [1;34m[I] [service.go:234] login to server success, get run id [17621749483996d2], server udp port [0][0m
+2023/09/07 11:33:10 [1;34m[I] [proxy_manager.go:144] [17621749483996d2] proxy added: [fadhssdrgjsardagasas ghasha fasdfasd][0m
+2023/09/07 11:33:10 [1;34m[I] [control.go:153] [fadhssdrgjsardagasas] start proxy success[0m
+2023/09/07 11:33:10 [1;34m[I] [control.go:153] [fasdfasd] start proxy success[0m
+2023/09/07 11:33:10 [1;34m[I] [control.go:153] [ghasha] start proxy success[0m

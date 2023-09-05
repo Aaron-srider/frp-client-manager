@@ -136,6 +136,26 @@ class Client {
             method: 'get',
         });
     }
+
+    static getFrpcLog(profileName: string) {
+        return request({
+            url: `/frpc-start-log`,
+            method: 'get',
+            params: {
+                profileName
+            }
+        });
+    }
+
+    static getFrpcStatus(profileName: string) {
+        return request({
+            url: `/frpc-status`,
+            method: 'get',
+            params: {
+                profileName
+            }
+        });
+    }
 }
 
 export default Client;

@@ -15,12 +15,14 @@ logging:
     javax.management: info
     org.apache.tomcat.util: info
     org.apache.catalina: info
+    org:
+      apache:
+        coyote:
+          http11: info
     io:
       netty:
         buffer:
           PooledByteBufAllocator: info
-        util:
-          NetUtil: info
-          internal:
-            PlatformDependent: info
-            PlatformDependent0: info
+          ByteBufUtil: info
+        channel: info
+        util: info

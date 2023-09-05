@@ -12,12 +12,21 @@ import java.io.File
 val log = KotlinLogging.logger {}
 
 fun startFrpc(frpcExec: String, configFile: String): Process {
+
     val profileName = File(configFile).name
+
+    // Create a ProcessBuilder for the command
+    val processBuilder = ProcessBuilder(frpcExec, "-c", configFile)
 
     var profileLog = File(configFile).parentFile.resolve("${profileName}.log")
 
-    var process = ProcessBuilder("sh", "-c", "${frpcExec} -c ${configFile} > ${profileLog.absolutePath}").start()
-    log.debug { "frpc process is started" }
+    // Redirect the output to a log file
+    val logFile = File(profileLog.absolutePath)
+    processBuilder.redirectOutput(logFile)
+
+    var process =  processBuilder.start()
+
+    log.debug { "frpc profile ${configFile} is started" }
     return process
 }
 
@@ -117,16 +126,58 @@ class FrpcProfileManager {
             }
         }
     }
+
+    fun profileStatus(profileName:String): Boolean {
+        synchronized(lock) {
+            configfilelistMap.get(profileName)?.let {
+                return it.isAlive
+            } ?: return false
+        }
+    }
+
+    fun reloadProfile(profileName: String) {
+        synchronized(lock) {
+            configfilelistMap.get(profileName)?.let {
+                deadlyKillAProcess(it)
+
+                var configfile = File(appProperties.configFileDir).resolve(profileName)
+                var newProcess: Process? = null
+                try {
+                    newProcess = startFrpc(appProperties.frpcExec, configfile.absolutePath)
+                } catch (e: Exception) {
+                    log.debug { "start frpc process for ${configfile} failed" }
+                    configfilelistMap.remove(profileName)
+                    throw RuntimeException("start frpc process for ${configfile} failed", e)
+                }
+
+                configfilelistMap.put(profileName, newProcess)
+            }
+        }
+    }
+}
+
+
+fun deadlyKillAProcess(process: Process) {
+    dokill(process.toHandle())
+}
+
+fun dokill(processHandler: ProcessHandle) {
+    val children = processHandler.children()
+    children.forEach {
+        dokill(it)
+    }
+
+    processHandler.destroy()
 }
 
 @Component
-class FrpcRunner: CommandLineRunner {
+class FrpcRunner : CommandLineRunner {
     @Autowired
     lateinit var frpcProfileManager: FrpcProfileManager
     override fun run(vararg args: String?) {
 
-        if(true) {
-            Thread{
+        if (true) {
+            Thread {
                 // start process for each config file
                 frpcProfileManager.startProcessForEachProfile()
 

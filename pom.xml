@@ -81,7 +81,11 @@
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>5.7.19</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-test -->
 		<!-- <dependency> -->
 		<!-- 	<groupId>org.jetbrains.kotlin</groupId> -->

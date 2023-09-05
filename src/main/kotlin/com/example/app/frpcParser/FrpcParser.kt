@@ -1,15 +1,19 @@
 package com.example.app.frpcParser
 
+import com.example.app.frpcProcessManager.FrpcProfileManager
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.io.File
 
 interface FrpcConfigParser {
     fun parse(file: File): FrpcConfig
-    fun writeToFile(config: FrpcConfig, file: File)
+    fun writeToFile(profileName: String, config: FrpcConfig, file: File)
 }
 
 @Component
 class FrpcConfigParserImpl : FrpcConfigParser {
+    @Autowired
+    lateinit var frpcProcessManager: FrpcProfileManager
     override fun parse(file: File): FrpcConfig {
         val lines = file.readLines()
         var common: CommonBean? = null
@@ -69,7 +73,7 @@ class FrpcConfigParserImpl : FrpcConfigParser {
         return FrpcConfig(common ?: throw IllegalArgumentException("Common section not found!"), clients)
     }
 
-    override fun writeToFile(config: FrpcConfig, file: File) {
+    override fun writeToFile(profileName: String, config: FrpcConfig, file: File) {
         file.bufferedWriter().use { writer ->
             writer.write("[common]\n")
             writer.write("server_addr = ${config.common.server_addr}\n")
@@ -84,5 +88,6 @@ class FrpcConfigParserImpl : FrpcConfigParser {
                 writer.write("remote_port = ${client.remote_port}\n\n")
             }
         }
+        frpcProcessManager.reloadProfile(profileName)
     }
 }

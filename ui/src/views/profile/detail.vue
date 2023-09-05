@@ -1,8 +1,9 @@
 <template>
     <div class=''>
         <el-card>
-            <el-button @click="startFrpc">restart frpc</el-button>
-            <el-button @click="refreshLog">refresh log</el-button>
+            <!--<el-button @click="startFrpc">restart frpc</el-button>-->
+            <!--<el-button @click="refreshLog">refresh log</el-button>-->
+            frpc alive: {{ frpcStatus.alive }}
             <el-input type="textarea" v-model="frpcLog" readonly :autosize="{ minRows: 2, maxRows: 10 }"></el-input>
         </el-card>
         <el-card>
@@ -137,6 +138,9 @@ export default class IndexView extends Vue {
         remote_port: 0
     }
      profileName: string | null = null ;
+    private frpcStatus: any = {
+        alive: true
+    };
 
     openAddClientConfigDialog(row: any) {
         this.addClientConfigDialogVisible = true
@@ -162,6 +166,14 @@ export default class IndexView extends Vue {
                 this.startWebSocket()
             }
         })
+    }
+
+    fetchFrpcLog(profileName: string) {
+        setInterval(() => {
+            Client.getFrpcLog(profileName).then(resp => {
+                this.frpcLog = resp.data
+            })
+        }, 1000)
     }
 
     startWebSocket() {
@@ -212,6 +224,8 @@ export default class IndexView extends Vue {
             Notification.error("token is empty")
             return
         }
+
+        this.common_config.profileName = this.profileName
 
         Client.editCommonConfig(this.common_config).then((res: any) => {
             Notification.success("edit successfully")
@@ -280,6 +294,14 @@ export default class IndexView extends Vue {
         })
     }
 
+    fetchFrpcStatus(profileName: string) {
+        setInterval(() => {
+            Client.getFrpcStatus(profileName).then(resp => {
+                this.frpcStatus = resp.data
+            })
+        }, 1000)
+    }
+
     created() {
         this.profileName = this.$route.query.profileName as string
         Client.getCommonConfig(this.profileName).then(resp => {
@@ -293,6 +315,9 @@ export default class IndexView extends Vue {
                 this.common_config_set = false
             })
 
+
+        this.fetchFrpcLog(this.profileName)
+        this.fetchFrpcStatus(this.profileName)
     }
 }
 </script>

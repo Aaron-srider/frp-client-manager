@@ -1,5 +1,6 @@
 package com.example.app.exception
 
+import cn.hutool.core.util.ReflectUtil
 import mu.KotlinLogging
 import org.json.JSONObject
 import org.springframework.http.HttpStatus
@@ -94,6 +95,11 @@ class GlobalExceptionHandler {
         fun putResult(field: String, message: String?) {
             paramCheckMap.put(field, message)
         }
+
+        // tostring
+        override fun toString(): String {
+            return paramCheckMap.toString()
+        }
     }
 
     // @Value("\${spring.servlet.multipart.max-file-size}")
@@ -123,14 +129,12 @@ class GlobalExceptionHandler {
     )
     fun paramValidateException(ex: Exception?): ResponseEntity<*> {
         return try {
-            val bindingResult: BindingResult =
-                getFieldValue(ex!!, "bindingResult", BindingResult::class.java)
-                ?:  return ResponseEntity(Any(), HttpStatus.BAD_REQUEST )
-            val parameterCheckResult = extractValidationErrorEntries(bindingResult)
+            val fieldValue:BindingResult = ReflectUtil.getFieldValue(ex!!, "bindingResult") as BindingResult
+            val parameterCheckResult = extractValidationErrorEntries(fieldValue)
             log.error("Request parameter error:{}", parameterCheckResult)
-            ResponseEntity(parameterCheckResult, HttpStatus.BAD_REQUEST )
+            ResponseEntity(parameterCheckResult, HttpStatus.BAD_REQUEST)
         } catch (e: NoSuchFieldException) {
-            ResponseEntity(Any(), HttpStatus.BAD_REQUEST )
+            ResponseEntity(Any(), HttpStatus.BAD_REQUEST)
         }
     }
 

@@ -162,7 +162,7 @@ interface FrpcConfigApi {
             `in` = ParameterIn.DEFAULT,
             description = "",
             schema = Schema()
-        ) @RequestBody body: @Valid UpdateCommonBeanDTO?,
+        ) @RequestBody @Valid body: UpdateCommonBeanDTO?,
     ): ResponseEntity<CommonBeanVO>
 }
 
@@ -280,7 +280,7 @@ class FrpcConfigApiImpl @Autowired constructor(
             `in` = ParameterIn.DEFAULT,
             description = "",
             schema = Schema()
-        ) @RequestBody body: @Valid UpdateCommonBeanDTO?,
+        ) @RequestBody @Valid body: UpdateCommonBeanDTO?,
     ): ResponseEntity<CommonBeanVO> {
         frpConfigManager.updateCommonBean(
             body!!.profileName!!,
@@ -292,6 +292,8 @@ class FrpcConfigApiImpl @Autowired constructor(
             this.token = body.token
         })
     }
+
+
 }
 
 
