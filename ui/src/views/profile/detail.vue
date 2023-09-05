@@ -144,6 +144,7 @@ export default class IndexView extends Vue {
     }
 
     addClientConfig() {
+        this.addClientConfigDialogData.profileName = this.profileName
         Client.addClientConfig(this.addClientConfigDialogData).then((resp: any) => {
             Notification.success('add client config success')
             this.clientBlockList.push(resp.data)
@@ -264,7 +265,9 @@ export default class IndexView extends Vue {
             return
         }
 
+
         let clientConfig = this.editClientConfigDialogData
+        clientConfig.profileName = this.profileName
         Client.editClientConfig(clientConfig).then(resp => {
             this.clientBlockList.filter(item => item.name === clientConfig.name).forEach(item => {
                 item.local_ip = clientConfig.local_ip
@@ -279,7 +282,6 @@ export default class IndexView extends Vue {
 
     created() {
         this.profileName = this.$route.query.profileName as string
-        debugger
         Client.getCommonConfig(this.profileName).then(resp => {
             this.common_config = resp.data
             this.common_config_set = true
